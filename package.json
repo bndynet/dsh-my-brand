@@ -2,6 +2,15 @@
   "name": "@bndynet/dsh-my-brand",
   "version": "0.1.0",
   "description": "Harness branding for the DSH Web client: logo mark, wordmark, home headline and browser icon.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bndynet/dsh-my-brand.git"
+  },
+  "homepage": "https://github.com/bndynet/dsh-my-brand#readme",
+  "bugs": {
+    "url": "https://github.com/bndynet/dsh-my-brand/issues"
+  },
+  "author": "Bendy Zhang <zb@bndy.net>",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {

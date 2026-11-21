@@ -1,0 +1,69 @@
+name: Publish
+
+# Publishes this bundle to npm through the shared bndynet/gh.flows workflow,
+# the same way dsh-workspace-monitor does.
+#
+# Prerequisite (npmjs.com -> package settings -> Trusted publishing):
+#   Repository:  bndynet/dsh-my-brand
+#   Workflow:    publish.yml   <- npm validates this exact file name
+#   Environment: (leave empty; this workflow declares no environment)
+# No NPM_TOKEN secret is involved: the job authenticates with GitHub OIDC and
+# attaches a provenance attestation, which needs the `repository` field in
+# package.json.
+#
+# Triggers:
+#   - GitHub Release published -> publish the package.json version to `latest`
+#   - manual run             -> test only unless `publish_enabled` is checked;
+#                               `publish-version` may bump major/minor/patch and
+#                               push the matching vX.Y.Z tag
+#
+# There is no build step: lib/ is hand-written ESM and ships as-is, so the
+# shared workflow only runs `npm test`. The npm tarball is generated during
+# publish and is gitignored, never committed.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      publish_enabled:
+        description: 'Whether to publish to npm'
+        required: false
+        default: false
+        type: boolean
+      publish-version:
+        description: 'Version bump type'
+        required: false
+        default: none
+        type: choice
+        options:
+          - none
+          - major
+          - minor
+          - patch
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    uses: bndynet/gh.flows/.github/workflows/npm.yml@main
+    with:
+      node-version: '24'
+      working-directory: '.'
+      registry-url: 'https://registry.npmjs.org'
+      lint-command: ''
+      test-command: 'npm test'
+      build-command: ''
+      publish-enabled: ${{ github.event_name == 'release' || inputs.publish_enabled }}
+      publish-version: ${{ inputs['publish-version'] || 'none' }}
+      publish-auth-method: 'oidc'
+      # npm test already ran in this job: skip prepack and publish the current
+      # version under the latest dist-tag.
+      publish-command: 'npm publish --access public --provenance --ignore-scripts --tag latest'
+      deploy-folder: ''

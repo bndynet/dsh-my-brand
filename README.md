@@ -35,16 +35,22 @@ refresh. No build step runs on install; `lib/` is plain ESM.
 
 ## Publish (owner)
 
-The package has no dependencies and no build step; `prepack` runs the smoke
-test in `test/smoke.mjs`:
+Releases go through GitHub Actions (`.github/workflows/publish.yml`), which
+reuses the `bndynet/gh.flows` npm workflow:
 
-```sh
-npm pack
-# bndynet-dsh-my-brand-0.1.0.tgz: lib/, cordis.patch.yml, locale/,
-# icon.svg, README.md, LICENSE
-npm publish ./bndynet-dsh-my-brand-0.1.0.tgz --access public \
-  --registry=https://registry.npmjs.org
-```
+- publishing a GitHub Release publishes the `package.json` version to `latest`;
+- a manual run only tests unless **publish_enabled** is checked, and
+  **publish-version** can bump major/minor/patch and push the `vX.Y.Z` tag.
+
+Before the first run, register the workflow as an npm Trusted Publisher in the
+package settings on npmjs.com: repository `bndynet/dsh-my-brand`, workflow
+`publish.yml`, environment empty. OIDC needs no `NPM_TOKEN` and adds a
+provenance attestation, which relies on the `repository` field in
+`package.json`.
+
+There is no build step and no dependencies: `lib/` ships as-is and `npm test`
+(`test/smoke.mjs`) is the only check. `npm pack` remains useful locally to
+inspect the tarball; the `.tgz` is a pack artifact and is gitignored.
 
 A directory install (`pnpm add <dir>`) links the checkout, so the folder must
 stay in place; an npm or tarball install copies the package into the profile.

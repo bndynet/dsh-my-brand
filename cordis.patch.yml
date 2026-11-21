@@ -1,0 +1,6 @@
+# Harness branding for the Web client. The Client module occupies the sidebar
+# and hero brand slots at a lower priority than the shipped occupants and adds
+# the home headline text and browser icon.
+- insert:
+    - id: my-brand
+      name: '@bndynet/dsh-my-brand'

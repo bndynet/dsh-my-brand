@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Harness</title>
+  <rect width="128" height="128" rx="28" fill="#151517"/>
+  <g transform="translate(24 39.95) scale(3.3333)">
+    <path fill="#d33e32" d="M0 0h14.43v4.79H0z"/>
+    <path fill="#4d7fbd" d="M0 9.64h4.79v4.79H0z"/>
+    <path fill="#65b34b" d="M19.21 0H24v14.43H9.64V9.64h9.57z"/>
+  </g>
+</svg>

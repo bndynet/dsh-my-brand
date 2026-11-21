@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Harness 品牌",
+    "description": "把 DeepSeek Harness 的图标、字标和首页标题替换为 Harness 品牌标识，并把浏览器标签页图标换成 Harness 图标。仅作用于 Web 客户端；文档标题和可安装应用图标不变。"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Harness branding",
+    "description": "Replaces the DeepSeek Harness mark, wordmark and home headline with the Harness logo, and points the browser tab icon at the Harness mark. Web client only; the document title and installable-app icons are unchanged."
+  }
+}

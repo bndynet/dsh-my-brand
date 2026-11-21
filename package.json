@@ -1,6 +1,6 @@
 {
   "name": "@bndynet/dsh-my-brand",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Harness branding for the DSH Web client: logo mark, wordmark, home headline and browser icon.",
   "repository": {
     "type": "git",

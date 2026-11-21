@@ -9,10 +9,13 @@ A DSH bundle that gives the Web client the **Harness** identity:
 | Empty-session hero | Harness colour mark before the headline |
 | Home headline | `Harness` (the `预览版` / `Preview` badge stays) |
 | Browser tab icon | Harness colour mark |
+| Accent colour | Links, info buttons, business state and the selection bar use the Harness blue `#4d7fbd` |
 
 The mark, wordmark and headline are replaced for every UI language. The
 document title, the installable-app (PWA) icons and the home whale decoration
-from the official brand plugin are intentionally left alone.
+from the official brand plugin are intentionally left alone. Primary buttons,
+switches and checkboxes keep the stock monochrome contrast; only the accent
+aliases are retinted.
 
 ## Requirements
 
@@ -64,6 +67,10 @@ module in `lib/client.js`:
 - registers `sidebar.brand.mark`, `sidebar.brand.name` and
   `conversation.hero.brand.mark` at priority `-1000`, which shadows the shipped
   occupants (a single slot rejects a second registration at the same priority);
+- stacks one theme layer with `ctx.theme.overrideTokens` that maps the
+  DeepSeek-blue accent aliases (`link`, `button-info-*`,
+  `state-business-primary/tertiary`, `toast-action`, the tab selection colour
+  and the thinking-label pair) to the Harness blue;
 - injects one stylesheet rule that swaps the home headline for `Harness`;
 - repoints the tab icon at an inline copy of the mark and restores the original
   `href` values on unload.
@@ -74,6 +81,9 @@ module in `lib/client.js`:
 - The headline rule targets the hero's `titleGroup` markup and the tab icon is
   replaced at runtime, so both are checked against the pinned DSH version.
   Bump `engines.dsh` only after re-verifying.
+- The accent retint is a theme override layer: it composes over whichever
+  theme is active and is removed on unload, so light and dark both follow the
+  user's preference.
 - PWA manifest icons stay the DSH artwork because they are served statically,
   not part of the client DOM.
 - Uninstall or disable the bundle to return to the stock identity; nothing is
